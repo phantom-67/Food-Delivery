@@ -8,6 +8,7 @@
 // 7) we cretaed a route for DisplayData and created a file inside routes 
 // 8) then we created api route for OrderData and go to OrderData.js
 
+/*
 const express = require('express')
 const app = express()
 const port = 4000
@@ -47,6 +48,81 @@ Mongodb().then(() => {
   app.use('/api', require("./Routes/OrderData"))
   app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
+  });
+}).catch(error => {
+  console.error("Error initializing server:", error);
+});
+
+*/
+
+// Working cros
+
+/*
+const express = require('express');
+const cors = require('cors'); // Import the cors package
+const app = express();
+const port = 4000;
+const Mongodb = require('./db');
+
+// Use CORS middleware
+app.use(cors({
+  origin: ['http://localhost:3000', 'https://phantom-67.github.io'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
+Mongodb().then(() => {
+  app.use(express.json());
+
+  app.get('/', (req, res) => {
+    res.send('Hello World!');
+  });
+
+  app.use('/api', require('./Routes/CreateUser'));
+  app.use('/api', require('./Routes/DisplayData'));
+  app.use('/api', require('./Routes/OrderData'));
+
+  app.listen(port, () => {
+    console.log(`Server listening on port ${port}`);
+  });
+}).catch(error => {
+  console.error('Error initializing server:', error);
+});
+*/
+
+const express = require('express');
+const cors = require('cors');
+const app = express();
+const port = 4000;
+const Mongodb = require("./db");
+
+// CORS configuration
+const corsOptions = {
+  origin: '*', // Allows all origins. Change this to specific domains if needed.
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Allows specific methods
+  allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept, Authorization', // Allows specific headers
+  credentials: true // Allows credentials
+};
+
+app.use(cors(corsOptions));
+
+// Connect to MongoDB
+Mongodb().then(() => {
+  app.use(express.json());
+
+  // Sample route
+  app.get('/', (req, res) => {
+    res.send('Hello World!');
+  });
+
+  // API routes
+  app.use('/api', require("./Routes/CreateUser"));
+  app.use('/api', require("./Routes/DisplayData"));
+  app.use('/api', require("./Routes/OrderData"));
+
+  // Start server
+  app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
   });
 }).catch(error => {
   console.error("Error initializing server:", error);
