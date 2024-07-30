@@ -57,7 +57,7 @@ Mongodb().then(() => {
 
 // Working cros
 
-/*
+
 const express = require('express');
 const cors = require('cors'); // Import the cors package
 const app = express();
@@ -88,8 +88,10 @@ Mongodb().then(() => {
 }).catch(error => {
   console.error('Error initializing server:', error);
 });
-*/
 
+
+//  new cors
+/*
 const express = require('express');
 const cors = require('cors');
 const app = express();
@@ -127,3 +129,4 @@ Mongodb().then(() => {
 }).catch(error => {
   console.error("Error initializing server:", error);
 });
+*/
