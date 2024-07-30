@@ -32,7 +32,7 @@ import {
 function App() {
   return (
     <CartProvider>
-      <Router basename="/ReactApp">
+      <Router basename="/Food-Delivery">
         <div>
 
           <Routes >
