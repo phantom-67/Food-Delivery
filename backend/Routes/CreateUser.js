@@ -78,14 +78,16 @@ route.post("/loginuser",
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
         }
-        let email = req.body.email;
+        // let email = req.body.email;
+        const { email, password } = req.body;
         try {
             let userData = await User.findOne({ email });
             if (!userData) {
                 return res.status(400).json({ errors: "Invalid Email" });
             }
 
-            const pwdCompare = bcrypt.compare(userData.password,req.body.password);
+            // const pwdCompare = await bcrypt.compare(userData.password,req.body.password);
+            const pwdCompare = await bcrypt.compare(password, userData.password);
             if (!pwdCompare) {
                 return res.status(400).json({ errors: "Incorrect Password" });
             }
@@ -104,12 +106,3 @@ route.post("/loginuser",
     })
 
 module.exports = route;
-
-
-
-
-
-
-
-
-
